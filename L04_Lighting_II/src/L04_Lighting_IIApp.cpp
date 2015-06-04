@@ -107,8 +107,8 @@ void L04_Lighting_II::setupBatches()
 void L04_Lighting_II::setupGUI()
 {
 	mParamLightPosX = 0.0f;
-	mParamLightPosY = 0.0f;
-	mParamLightPosZ = 0.0f;
+	mParamLightPosY = 1.0f;
+	mParamLightPosZ = -1.0f;
 	mParamSpecularPower = 16.0f;
 	mParamSpecularStrength = 2.0f;
 	mParamAmbientStrength = 0.25f;

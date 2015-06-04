@@ -68,7 +68,7 @@ void L02_BasicScene::setupCamera()
 	float aspectRatio = getWindowAspectRatio();
 	float nearClip = 0.1f;
 	float farClip = 10.0f;
-	vec3 cameraPosition = vec3(0, 0, -1);
+	vec3 cameraPosition = vec3(0, 0.1, -1);
 	vec3 cameraTarget = vec3(0);
 	vec3 cameraUpAxis = vec3(0, 1, 0);
 
