@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F6D3A8CA-1F98-4777-A9F6-0AC6847857D8}</ProjectGuid>
-    <RootNamespace>L08_Motion_II</RootNamespace>
+    <ProjectGuid>{0D84A42C-5A23-4347-A489-C9A96C7EC24A}</ProjectGuid>
+    <RootNamespace>L10_FBO</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -106,6 +106,10 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\shaders\blur_frag.glsl" />
+    <None Include="..\assets\shaders\blur_vert.glsl" />
+    <None Include="..\assets\shaders\highpass_frag.glsl" />
+    <None Include="..\assets\shaders\passthru_vert.glsl" />
     <None Include="..\assets\shaders\shape_reflect_frag.glsl" />
     <None Include="..\assets\shaders\shape_refract_frag.glsl" />
     <None Include="..\assets\shaders\shape_vert.glsl" />
@@ -114,10 +118,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ClCompile Include="..\src\L08_Motion_IIApp.cpp" />
+    <ClCompile Include="..\src\L10_FBOApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h" />
+    <ClInclude Include="..\src\L10_FBOApp.h" />
+    <ClInclude Include="..\src\Particle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
