@@ -1,7 +1,9 @@
 /*
-Lesson 06: In Which We Learn about instancing
+Lesson 09: In Which We Learn about more things we can do with per-instance attributes, and how to simplify per-instance
+attribute management using interleaved data
+
 Topics Covered:
-Instancing
+	Interleaving attribute data using structs
 */
 
 #include "cinder/app/App.h"
@@ -179,17 +181,14 @@ void L09_Motion_III::setupCamera()
 
 void L09_Motion_III::setupSpheres(int numElements)
 {
-	//setup sphere
+	float sphereRadius = 0.075f;
+	int sphereResolution = 32;
 	string sphereVertShader = "shaders/shape_vert.glsl";
 	string sphereFragShader = "shaders/shape_reflect_frag.glsl";
 	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
-
-	float sphereRadius = 0.075f;
-	int sphereResolution = 32;
 	mSphereMeshData = gl::VboMesh::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution));
 
 	float step = (M_PI*2.0) / numElements;
-
 	for (int i = 0; i < numElements; ++i)
 	{
 		float x = math<float>::cos(i*step);
@@ -210,19 +209,16 @@ void L09_Motion_III::setupSpheres(int numElements)
 
 void L09_Motion_III::setupTorii(int numElements)
 {
-	//setup torus
-	string torusVertShader = "shaders/shape_vert.glsl";
-	string torusFragShader = "shaders/shape_refract_frag.glsl";
-	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
-
 	float torusOuterRadius = 0.1f;
 	float torusInnerRadius = 0.075f;
 	int torusAxisResolution = 32;
 	int torusSegmentResolution = 16;
+	string torusVertShader = "shaders/shape_vert.glsl";
+	string torusFragShader = "shaders/shape_refract_frag.glsl";
+	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
 	mTorusMeshData = gl::VboMesh::create(geom::Torus().radius(torusOuterRadius, torusInnerRadius).subdivisionsHeight(torusSegmentResolution).subdivisionsAxis(torusAxisResolution));
 
 	float step = (M_PI*2.0) / numElements;
-
 	for (int i = 0; i < numElements; ++i)
 	{
 		float x = math<float>::cos(i*step);
@@ -331,7 +327,6 @@ void L09_Motion_III::draw()
 	drawSkybox();
 	drawScene();
 
-
 	gl::setMatricesWindow(getWindowSize());
 	mGUI->draw();
 }
@@ -360,7 +355,6 @@ void L09_Motion_III::drawScene()
 	gl::popMatrices();
 
 	mSkyboxCubemap->unbind(0);
-
 }
 
 void L09_Motion_III::drawSkybox()

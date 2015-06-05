@@ -1,9 +1,9 @@
 /*
 Lesson 02: In Which We Learn to setup shaders and use batches to draw basic shapes.
 Topics Covered:
-	drawing simple primitives with BatchRefs
-	writing shaders and using GlslProgRefs to shade our BatchRefs
-	basic object positioning using glm, the GL Math library
+	Drawing simple primitives with BatchRefs
+	Writing shaders and using GlslProgRef to apply GLSL shaders to our shapes
+	Basic object positioning using glm, the GL Math library
 */
 
 #include "cinder/app/App.h"
@@ -43,22 +43,18 @@ void L02_BasicScene::setup()
 {
 	setupCamera();
 
-	//setup plane
+	vec3 planeNormal(0, 1, 0);
+	vec2 planeSize(2.0f);
 	string planeVertShader = "shaders/plane_vert.glsl";
 	string planeFragShader = "shaders/plane_frag.glsl";
 	mPlaneShader = gl::GlslProg::create(loadAsset(planeVertShader), loadAsset(planeFragShader));
-
-	vec3 planeNormal(0, 1, 0);
-	vec2 planeSize(2.0f);
 	mPlaneBatch = gl::Batch::create(geom::Plane().normal(planeNormal).size(planeSize), mPlaneShader);
-
-	//setup sphere
-	string sphereVertShader = "shaders/sphere_vert.glsl";
-	string sphereFragShader = "shaders/sphere_frag.glsl";
-	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
 
 	float sphereRadius = 0.1f;
 	int sphereResolution = 16;
+	string sphereVertShader = "shaders/sphere_vert.glsl";
+	string sphereFragShader = "shaders/sphere_frag.glsl";
+	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
 	mSphereBatch = gl::Batch::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution),mSphereShader);
 }
 
@@ -93,10 +89,10 @@ void L02_BasicScene::draw()
 
 	mPlaneBatch->draw();
 
-	gl::pushMatrices();
+	gl::pushModelMatrix();
 	gl::translate(vec3(0, 0.1, 0));
 	mSphereBatch->draw();
-	gl::popMatrices();
+	gl::popModelMatrix();
 }
 
 CINDER_APP(L02_BasicScene, RendererGl)

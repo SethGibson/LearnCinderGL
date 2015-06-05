@@ -1,9 +1,12 @@
 /*
-Lesson 04: In Which We Learn more lighting and how to use Cinder's debug UI
+Lesson 04: In Which We Learn more lighting, how to use Cinder's built-in UI to control settings,
+and how to set application parameters
+
 Topics Covered:
-	Lighting math in shaders
-	Cinder's Params window
-	Changing application settings
+	Specular highlights
+	Cinder's InterfaceGl window
+	GLSL uniforms
+	Passing application parameters to the application runner macro
 */
 
 #include "cinder/app/App.h"
@@ -85,22 +88,18 @@ void L04_Lighting_II::setupCamera()
 
 void L04_Lighting_II::setupBatches()
 {
-	//setup plane
+	vec3 planeNormal(0, 1, 0);
+	vec2 planeSize(2.0f);
 	string planeVertShader = "shaders/plane_vert.glsl";
 	string planeFragShader = "shaders/plane_frag.glsl";
 	mPlaneShader = gl::GlslProg::create(loadAsset(planeVertShader), loadAsset(planeFragShader));
-
-	vec3 planeNormal(0, 1, 0);
-	vec2 planeSize(2.0f);
 	mPlaneBatch = gl::Batch::create(geom::Plane().normal(planeNormal).size(planeSize), mPlaneShader);
-
-	//setup sphere
-	string sphereVertShader = "shaders/sphere_vert.glsl";
-	string sphereFragShader = "shaders/sphere_frag.glsl";
-	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
 
 	float sphereRadius = 0.1f;
 	int sphereResolution = 32;
+	string sphereVertShader = "shaders/sphere_vert.glsl";
+	string sphereFragShader = "shaders/sphere_frag.glsl";
+	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
 	mSphereBatch = gl::Batch::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution), mSphereShader);
 }
 
@@ -137,22 +136,17 @@ void L04_Lighting_II::draw()
 	gl::clear(Color(0, 0, 0));
 	gl::setMatrices(mCamera);
 	gl::enableDepthRead();
-
 	mPlaneBatch->draw();
-	
 	drawSphere();
-
 	gl::setMatricesWindow(getWindowSize());
-	//gl::disableDepthRead();
+	gl::disableDepthRead();
 	mGUI->draw();
 }
 
 void L04_Lighting_II::drawSphere()
 {
-
-	gl::pushMatrices();
+	gl::pushModelMatrix();
 	gl::translate(vec3(0, 0.1, 0));
-
 	mSphereBatch->getGlslProg()->uniform(mUniformEyePos, mCamera.getEyePoint());
 	mSphereBatch->getGlslProg()->uniform(mUniformLightPos, vec3(mParamLightPosX, mParamLightPosY, mParamLightPosZ));
 	mSphereBatch->getGlslProg()->uniform(mUniformSpecularPower, mParamSpecularPower);
@@ -160,9 +154,7 @@ void L04_Lighting_II::drawSphere()
 	mSphereBatch->getGlslProg()->uniform(mUniformAmbientStrength, mParamAmbientStrength);
 	mSphereBatch->getGlslProg()->uniform(mUniformColor, mParamColor);
 	mSphereBatch->draw();
-	
-	gl::popMatrices();
-
+	gl::popModelMatrix();
 }
 
 void prepareSettings(App::Settings *pSettings)

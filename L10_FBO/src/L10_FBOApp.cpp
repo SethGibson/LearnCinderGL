@@ -1,7 +1,7 @@
 /*
-Lesson 06: In Which We Learn about instancing
+Lesson 10: In Which We Learn about rendering to textures for full screen effects
 Topics Covered:
-Instancing
+	Cinder Framebuffer Objects
 */
 
 #include "L10_FBOApp.h"
@@ -36,17 +36,14 @@ void L10_FBO::setupCamera()
 
 void L10_FBO::setupSpheres(int numElements)
 {
-	//setup sphere
+	float sphereRadius = 0.075f;
+	int sphereResolution = 32;
 	string sphereVertShader = "shaders/shape_vert.glsl";
 	string sphereFragShader = "shaders/shape_reflect_frag.glsl";
 	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
-
-	float sphereRadius = 0.075f;
-	int sphereResolution = 32;
 	mSphereMeshData = gl::VboMesh::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution));
 
 	float step = (M_PI*2.0) / numElements;
-
 	for (int i = 0; i < numElements; ++i)
 	{
 		float x = math<float>::cos(i*step);
@@ -67,19 +64,16 @@ void L10_FBO::setupSpheres(int numElements)
 
 void L10_FBO::setupTorii(int numElements)
 {
-	//setup torus
-	string torusVertShader = "shaders/shape_vert.glsl";
-	string torusFragShader = "shaders/shape_refract_frag.glsl";
-	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
-
 	float torusOuterRadius = 0.1f;
 	float torusInnerRadius = 0.075f;
 	int torusAxisResolution = 32;
 	int torusSegmentResolution = 16;
+	string torusVertShader = "shaders/shape_vert.glsl";
+	string torusFragShader = "shaders/shape_refract_frag.glsl";
+	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
 	mTorusMeshData = gl::VboMesh::create(geom::Torus().radius(torusOuterRadius, torusInnerRadius).subdivisionsHeight(torusSegmentResolution).subdivisionsAxis(torusAxisResolution));
 
 	float step = (M_PI*2.0) / numElements;
-
 	for (int i = 0; i < numElements; ++i)
 	{
 		float x = math<float>::cos(i*step);
@@ -289,7 +283,6 @@ void L10_FBO::drawScene()
 	gl::popMatrices();
 
 	mSkyboxCubemap->unbind(0);
-
 }
 
 void L10_FBO::drawSkybox()

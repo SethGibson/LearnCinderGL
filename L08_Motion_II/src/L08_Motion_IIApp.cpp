@@ -1,7 +1,8 @@
 /*
-Lesson 06: In Which We Learn about instancing
+Lesson 08: In Which We Learn about animation using per-instance attributes
 Topics Covered:
-Instancing
+	Animating Per-Instance Attributes
+	Changing vertex data buffer contents
 */
 
 #include "cinder/app/App.h"
@@ -58,14 +59,14 @@ private:
 	int				mNumTorii;
 	vector<vec3>	mTorusPositions;
 
-	string			mUniformLightPos = "uLightPos";
-	string			mUniformEyePos = "uCameraPos";
-	string			mUniformSpecularPower = "uSpecularPower";
-	string			mUniformSpecularStrength = "uSpecularStrength";
-	string			mUniformAmbientStrength = "uAmbientStrength";
-	string			mUniformEnvStrength = "uEnvStrength";
-	string			mUniformColor = "uColor";
-	string			mUniformRefract = "uRefract";
+	string mUniformLightPos = "uLightPos";
+	string mUniformEyePos = "uCameraPos";
+	string mUniformSpecularPower = "uSpecularPower";
+	string mUniformSpecularStrength = "uSpecularStrength";
+	string mUniformAmbientStrength = "uAmbientStrength";
+	string mUniformEnvStrength = "uEnvStrength";
+	string mUniformColor = "uColor";
+	string mUniformRefract = "uRefract";
 
 	gl::BatchRef			mSkyboxBatch;
 	gl::GlslProgRef			mSkyboxShader;
@@ -123,17 +124,14 @@ void L08_Motion_II::setupCamera()
 
 void L08_Motion_II::setupSpheres(int numElements)
 {
-	//setup sphere
+	float sphereRadius = 0.1f;
+	int sphereResolution = 32;
 	string sphereVertShader = "shaders/shape_vert.glsl";
 	string sphereFragShader = "shaders/shape_reflect_frag.glsl";
 	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
-
-	float sphereRadius = 0.1f;
-	int sphereResolution = 32;
 	mSphereMeshData = gl::VboMesh::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution));
 
 	float step = (M_PI*2.0) / numElements;
-
 	for (int i = 0; i < numElements; ++i)
 	{
 		float x = math<float>::cos(i*step);
@@ -152,19 +150,16 @@ void L08_Motion_II::setupSpheres(int numElements)
 
 void L08_Motion_II::setupTorii(int numElements)
 {
-	//setup torus
-	string torusVertShader = "shaders/shape_vert.glsl";
-	string torusFragShader = "shaders/shape_refract_frag.glsl";
-	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
-
 	float torusOuterRadius = 0.1f;
 	float torusInnerRadius = 0.075f;
 	int torusAxisResolution = 32;
 	int torusSegmentResolution = 16;
+	string torusVertShader = "shaders/shape_vert.glsl";
+	string torusFragShader = "shaders/shape_refract_frag.glsl";
+	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
 	mTorusMeshData = gl::VboMesh::create(geom::Torus().radius(torusOuterRadius, torusInnerRadius).subdivisionsHeight(torusSegmentResolution).subdivisionsAxis(torusAxisResolution));
 
 	float step = (M_PI*2.0) / numElements;
-
 	for (int i = 0; i < numElements; ++i)
 	{
 		float x = math<float>::cos(i*step);

@@ -1,5 +1,9 @@
 /*
 Lesson 01: In Which We Learn To Setup A Camera
+Topics Covered:
+	Perspective Camera
+	Camera Controls
+	Simple shape drawing
 */
 
 #include "cinder/app/App.h"
@@ -27,7 +31,6 @@ private:
 
 void L01_CameraApp::setup()
 {
-	//camera parameters
 	float verticalFOV = 45.0f;
 	float aspectRatio = getWindowAspectRatio();
 	float nearClip = 0.1f;
@@ -36,13 +39,8 @@ void L01_CameraApp::setup()
 	vec3 cameraTarget = vec3(0);
 	vec3 cameraUpAxis = vec3(0, 1, 0);
 
-	//set camera intrinsics
 	mCamera.setPerspective(verticalFOV, aspectRatio, nearClip, farClip);
-
-	//set camera extrinsics
 	mCamera.lookAt(cameraPosition, cameraTarget, cameraUpAxis);
-
-	//bind camera to the mouse
 	mCameraCtrl = CameraUi(&mCamera, getWindow());
 }
 

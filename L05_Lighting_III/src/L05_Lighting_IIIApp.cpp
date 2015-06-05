@@ -1,10 +1,10 @@
 /*
-Lesson 05: In Which We Learn about cubemaps, environment mapping, flesh out our UI a bit more, and finetune our camera control
+Lesson 05: In Which We Learn about cubemaps, environment mapping, "advanced" params, and different way to use shaders
 Topics Covered:
 	Loading and working with cubemaps/textures
-	reflection and refraction mapping
-	direct shader binding
-	"enum" parameters
+	Reflection and refraction mapping
+	Direct shader binding
+	Enumerated parameters
 */
 
 #include "cinder/app/App.h"
@@ -206,7 +206,6 @@ void L05_Lighting_III::draw()
 	drawSkybox();
 	drawScene();
 
-
 	gl::setMatricesWindow(getWindowSize());
 	mGUI->draw();
 }
@@ -215,7 +214,7 @@ void L05_Lighting_III::drawScene()
 {
 	gl::enableDepthRead();
 	mSkyboxCubemap->bind(0);
-	gl::pushMatrices();
+	gl::pushModelMatrix();
 	gl::translate(mSpherePosition);
 	mSphereBatch->getGlslProg()->uniform(mUniformEyePos, mCamera.getEyePoint());
 	mSphereBatch->getGlslProg()->uniform(mUniformLightPos, vec3(mParamLightPosX, mParamLightPosY, mParamLightPosZ));
@@ -225,9 +224,9 @@ void L05_Lighting_III::drawScene()
 	mSphereBatch->getGlslProg()->uniform(mUniformEnvStrength, mParamSphereEnvStrength);
 	mSphereBatch->getGlslProg()->uniform(mUniformColor, mParamSphereColor);
 	mSphereBatch->draw();
-	gl::popMatrices();
+	gl::popModelMatrix();
 
-	gl::pushMatrices();
+	gl::pushModelMatrix();
 	gl::translate(mTorusPosition);
 	mTorusBatch->getGlslProg()->uniform(mUniformEyePos, mCamera.getEyePoint());
 	mTorusBatch->getGlslProg()->uniform(mUniformLightPos, vec3(mParamLightPosX, mParamLightPosY, mParamLightPosZ));
@@ -238,13 +237,14 @@ void L05_Lighting_III::drawScene()
 	mTorusBatch->getGlslProg()->uniform(mUniformColor, mParamTorusColor);
 	mTorusBatch->getGlslProg()->uniform(mUniformRefract, mParamTorusRefractIndices[mParamTorusRefractId]);
 	mTorusBatch->draw();
-	gl::popMatrices();
+	gl::popModelMatrix();
 	mSkyboxCubemap->unbind(0);
 }
 
 void L05_Lighting_III::drawSkybox()
 {
 	gl::disableDepthRead();
+
 	mSkyboxShader->bind();
 	mSkyboxCubemap->bind(0);
 	gl::drawCube(vec3(0), vec3(1));

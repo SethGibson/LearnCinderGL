@@ -1,7 +1,7 @@
 /*
 Lesson 03: In Which We Learn basic lighting with shaders
 Topics Covered:
-	Lighting math in shaders
+	Simple diffuse lighting with GLSL
 */
 
 #include "cinder/app/App.h"
@@ -61,22 +61,18 @@ void L03_Lighting_I::setupCamera()
 
 void L03_Lighting_I::setupBatches()
 {
-	//setup plane
+	vec3 planeNormal(0, 1, 0);
+	vec2 planeSize(2.0f);
 	string planeVertShader = "shaders/plane_vert.glsl";
 	string planeFragShader = "shaders/plane_frag.glsl";
 	mPlaneShader = gl::GlslProg::create(loadAsset(planeVertShader), loadAsset(planeFragShader));
-
-	vec3 planeNormal(0, 1, 0);
-	vec2 planeSize(2.0f);
 	mPlaneBatch = gl::Batch::create(geom::Plane().normal(planeNormal).size(planeSize), mPlaneShader);
-
-	//setup sphere
-	string sphereVertShader = "shaders/sphere_vert.glsl";
-	string sphereFragShader = "shaders/sphere_frag.glsl";
-	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
 
 	float sphereRadius = 0.1f;
 	int sphereResolution = 16;
+	string sphereVertShader = "shaders/sphere_vert.glsl";
+	string sphereFragShader = "shaders/sphere_frag.glsl";
+	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
 	mSphereBatch = gl::Batch::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution), mSphereShader);
 }
 
@@ -96,10 +92,10 @@ void L03_Lighting_I::draw()
 
 	mPlaneBatch->draw();
 
-	gl::pushMatrices();
+	gl::pushModelMatrix();
 	gl::translate(vec3(0, 0.1, 0));
 	mSphereBatch->draw();
-	gl::popMatrices();
+	gl::popModelMatrix();
 }
 
 CINDER_APP(L03_Lighting_I, RendererGl)

@@ -1,7 +1,7 @@
 /*
-Lesson 06: In Which We Learn about instancing
+Lesson 07: In Which We Learn how to add simple animation to our objects
 Topics Covered:
-Instancing
+	glm::rotate
 */
 
 #include "cinder/app/App.h"
@@ -54,14 +54,14 @@ private:
 	gl::VboMeshRef	mTorusMeshData;
 	int				mNumTorii;
 
-	string			mUniformLightPos = "uLightPos";
-	string			mUniformEyePos = "uCameraPos";
-	string			mUniformSpecularPower = "uSpecularPower";
-	string			mUniformSpecularStrength = "uSpecularStrength";
-	string			mUniformAmbientStrength = "uAmbientStrength";
-	string			mUniformEnvStrength = "uEnvStrength";
-	string			mUniformColor = "uColor";
-	string			mUniformRefract = "uRefract";
+	string mUniformLightPos = "uLightPos";
+	string mUniformEyePos = "uCameraPos";
+	string mUniformSpecularPower = "uSpecularPower";
+	string mUniformSpecularStrength = "uSpecularStrength";
+	string mUniformAmbientStrength = "uAmbientStrength";
+	string mUniformEnvStrength = "uEnvStrength";
+	string mUniformColor = "uColor";
+	string mUniformRefract = "uRefract";
 
 	gl::BatchRef			mSkyboxBatch;
 	gl::GlslProgRef			mSkyboxShader;
@@ -69,25 +69,25 @@ private:
 
 	params::InterfaceGlRef	mGUI;
 	float					mParamLightPosX,
-		mParamLightPosY,
-		mParamLightPosZ;
+							mParamLightPosY,
+							mParamLightPosZ;
 
 	float					mParamSphereSpecularPower,
-		mParamSphereSpecularStrength,
-		mParamSphereAmbientStrength,
-		mParamSphereEnvStrength;
+							mParamSphereSpecularStrength,
+							mParamSphereAmbientStrength,
+							mParamSphereEnvStrength;
 
 	vector<float>			mParamTorusRefractIndices;
 	vector<string>			mParamTorusRefractNames;
 	int						mParamTorusRefractId;
 
 	float					mParamTorusSpecularPower,
-		mParamTorusSpecularStrength,
-		mParamTorusAmbientStrength,
-		mParamTorusEnvStrength;
+							mParamTorusSpecularStrength,
+							mParamTorusAmbientStrength,
+							mParamTorusEnvStrength;
 
 	Color					mParamSphereColor,
-		mParamTorusColor;
+							mParamTorusColor;
 };
 
 void L07_Motion_I::setup()

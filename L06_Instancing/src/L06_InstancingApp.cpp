@@ -1,7 +1,10 @@
 /*
-Lesson 06: In Which We Learn about instancing
+Lesson 06: In Which We Learn about instancing, i.e. defining a model once and drawing it multiple times with different attributes
 Topics Covered:
 	Instancing
+	Cinder Vertex Buffer Objects
+	Cinder Mesh Objects
+	Cinder Attribute Mapping
 */
 
 #include "cinder/app/App.h"
@@ -26,7 +29,6 @@ public:
 	void draw() override;
 
 private:
-
 	void setupCamera();
 	void setupSpheres(int numElements);
 	void setupTorii(int numElements);
@@ -119,13 +121,11 @@ void L06_Instancing::setupCamera()
 
 void L06_Instancing::setupSpheres(int numElements)
 {
-	//setup sphere
+	float sphereRadius = 0.1f;
+	int sphereResolution = 32;
 	string sphereVertShader = "shaders/shape_vert.glsl";
 	string sphereFragShader = "shaders/shape_reflect_frag.glsl";
 	mSphereShader = gl::GlslProg::create(loadAsset(sphereVertShader), loadAsset(sphereFragShader));
-
-	float sphereRadius = 0.1f;
-	int sphereResolution = 32;
 	mSphereMeshData = gl::VboMesh::create(geom::Sphere().radius(sphereRadius).subdivisions(sphereResolution));
 	
 	float step = (M_PI*2.0) / numElements;
@@ -148,15 +148,13 @@ void L06_Instancing::setupSpheres(int numElements)
 
 void L06_Instancing::setupTorii(int numElements)
 {
-	//setup torus
-	string torusVertShader = "shaders/shape_vert.glsl";
-	string torusFragShader = "shaders/shape_refract_frag.glsl";
-	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
-
 	float torusOuterRadius = 0.1f;
 	float torusInnerRadius = 0.075f;
 	int torusAxisResolution = 32;
 	int torusSegmentResolution = 16;
+	string torusVertShader = "shaders/shape_vert.glsl";
+	string torusFragShader = "shaders/shape_refract_frag.glsl";
+	mTorusShader = gl::GlslProg::create(loadAsset(torusVertShader), loadAsset(torusFragShader));
 	mTorusMeshData = gl::VboMesh::create(geom::Torus().radius(torusOuterRadius, torusInnerRadius).subdivisionsHeight(torusSegmentResolution).subdivisionsAxis(torusAxisResolution));
 
 	float step = (M_PI*2.0) / numElements;
@@ -245,7 +243,6 @@ void L06_Instancing::draw()
 
 	drawSkybox();
 	drawScene();
-
 
 	gl::setMatricesWindow(getWindowSize());
 	mGUI->draw();
