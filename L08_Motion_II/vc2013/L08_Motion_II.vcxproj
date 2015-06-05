@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -98,7 +99,13 @@
   <ItemGroup>
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="..\assets\shaders\shape_reflect_frag.glsl" />
+    <None Include="..\assets\shaders\shape_refract_frag.glsl" />
+    <None Include="..\assets\shaders\shape_vert.glsl" />
+    <None Include="..\assets\shaders\skybox_frag.glsl" />
+    <None Include="..\assets\shaders\skybox_vert.glsl" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <ClCompile Include="..\src\L08_Motion_IIApp.cpp" />
