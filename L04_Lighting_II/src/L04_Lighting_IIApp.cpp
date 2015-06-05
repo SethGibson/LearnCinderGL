@@ -31,11 +31,9 @@ public:
 	void draw() override;
 
 private:
-
 	void setupCamera();
 	void setupBatches();
 	void setupGUI();
-
 	void drawSphere();
 
 	CameraPersp	mCamera;
