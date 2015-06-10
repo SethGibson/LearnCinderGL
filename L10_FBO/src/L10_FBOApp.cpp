@@ -212,7 +212,7 @@ void L10_FBO::updateFbo()
 	mHighPassShader->uniform("uWhiteMid", mParamWhiteMid);
 	mHighPassShader->uniform("uWhiteThreshold", mParamWhiteThresh);
 	mRawFbo->bindTexture(0);
-	gl::drawSolidRect(Rectf({vec2(0), getWindowSize()}));
+	gl::drawSolidRect(Rectf(vec2(0), getWindowSize()));
 	mRawFbo->unbindTexture(0);
 	mHighPassFbo->unbindFramebuffer();
 
@@ -224,7 +224,7 @@ void L10_FBO::updateFbo()
 	mBlurShader->uniform("uBlurSize", 1.5f);
 	mBlurShader->uniform("uBlurStrength", 2.0f);
 	mHighPassFbo->bindTexture(0);
-	gl::drawSolidRect(Rectf({ vec2(0), getWindowSize() }));
+	gl::drawSolidRect(Rectf(vec2(0), getWindowSize()));
 	mHighPassFbo->unbindTexture(0);
 	mBlurHFbo->unbindFramebuffer();
 
@@ -236,7 +236,7 @@ void L10_FBO::updateFbo()
 	mBlurShader->uniform("uBlurSize", 3.0f);
 	mBlurShader->uniform("uBlurStrength", 2.0f);
 	mBlurHFbo->bindTexture(0);
-	gl::drawSolidRect(Rectf({ vec2(0), getWindowSize() }));
+	gl::drawSolidRect(Rectf(vec2(0), getWindowSize()));
 	mBlurHFbo->unbindTexture(0);
 	mBlurVFbo->unbindFramebuffer();
 }
