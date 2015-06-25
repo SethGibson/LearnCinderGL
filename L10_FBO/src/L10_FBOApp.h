@@ -105,5 +105,10 @@ private:
 	float					mParamWhiteMax,
 							mParamWhiteMid,
 							mParamWhiteThresh;
+
+	float					mParamBlurSizeU,
+							mParamBlurSizeV,
+							mParamBlurStrU,
+							mParamBlurStrV;
 };
 #endif

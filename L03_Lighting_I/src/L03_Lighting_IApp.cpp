@@ -2,6 +2,9 @@
 Lesson 03: In Which We Learn basic lighting with shaders
 Topics Covered:
 	Simple diffuse lighting with GLSL
+	Shaders!
+
+	"Lighting" is a bit of a misnomer as this lesson serves as our introduction to shaders/GLSL.
 */
 
 #include "cinder/app/App.h"
@@ -86,6 +89,12 @@ void L03_Lighting_I::update()
 
 void L03_Lighting_I::draw()
 {
+	/* Working With Shaders
+		So you'll notice that other than moving the batch setup into its own method
+		the code in the cpp file is practically identical to the previous lesson...
+		What's up with that? Well, once we want to start drawing objects, all the magic is
+		performed by the shaders, so we'll be working in the .glsl files for this lesson...
+	*/
 	gl::clear(Color(0, 0, 0));
 	gl::setMatrices(mCamera);
 	gl::enableDepthRead();
@@ -96,6 +105,18 @@ void L03_Lighting_I::draw()
 	gl::translate(vec3(0, 0.1, 0));
 	mSphereBatch->draw();
 	gl::popModelMatrix();
+
+	/* EXERCISES
+		Change the color of the of the sphere
+
+		Right now, we just assume a white light. Implement color for the light
+			HINT: define another uniform for color, then modulate the surface color
+			of the sphere by the new color and the diffuse term in the shader
+
+		Copy sphere_vert and sphere_frag, add a new object to the scene with those shaders, and
+		color them something else (we'll explore a simpler way to do this in a future lesson, but try this for now)
+			HINT: you'll need a new gl::BatchRef and gl::GlslProgRef
+	*/
 }
 
 CINDER_APP(L03_Lighting_I, RendererGl)

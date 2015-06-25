@@ -124,14 +124,19 @@ void L10_FBO::setupGUI()
 	mParamWhiteMid = 0.1f;
 	mParamWhiteThresh = 0.25f;
 
-	mGUI = params::InterfaceGl::create("Params", ivec2(300, 350));
+	mParamBlurStrU = 1.0f;
+	mParamBlurStrV = 1.0f;
+	mParamBlurSizeU = 1.0f;
+	mParamBlurSizeV = 1.0f;
+
+	mGUI = params::InterfaceGl::create("Params", ivec2(300, 400));
 	mGUI->addParam<float>("mParamLightPosX", &mParamLightPosX).optionsStr("label='light x'");
 	mGUI->addParam<float>("mParamLightPosY", &mParamLightPosY).optionsStr("label='light y'");
 	mGUI->addParam<float>("mParamLightPosZ", &mParamLightPosZ).optionsStr("label='light z'");
 
-	mGUI->addParam<float>("mParamWhiteMax", &mParamWhiteMax);
-	mGUI->addParam<float>("mParamWhiteMid", &mParamWhiteMid);
-	mGUI->addParam<float>("mParamWhiteThresh", &mParamWhiteThresh);
+	mGUI->addParam<float>("mParamWhiteMax", &mParamWhiteMax).optionsStr("label='Luminance'");
+	mGUI->addParam<float>("mParamWhiteMid", &mParamWhiteMid).optionsStr("label='Mid Tone'");
+	mGUI->addParam<float>("mParamWhiteThresh", &mParamWhiteThresh).optionsStr("label='Threshold'");
 
 	mGUI->addSeparator("");
 	mGUI->addText("Sphere");
@@ -143,6 +148,15 @@ void L10_FBO::setupGUI()
 	mGUI->addSeparator("");
 	mGUI->addParam<Color>("mParamTorusColor", &mParamTorusColor).optionsStr("label='color'");
 	mGUI->addParam("mParamTorusRefract", mParamTorusRefractNames, &mParamTorusRefractId).optionsStr("label='refraction'");
+
+	mGUI->addSeparator("");
+	mGUI->addText("Bloom");
+	mGUI->addSeparator("");
+	mGUI->addParam<float>("mParamBlurSizeU", &mParamBlurSizeU).optionsStr("label='Blur Width'");
+	mGUI->addParam<float>("mParamBlurSizeV", &mParamBlurSizeV).optionsStr("label='Blur Height'");
+	mGUI->addParam<float>("mParamBlurStrU", &mParamBlurStrU).optionsStr("label='Horizontal Blur Strength'");
+	mGUI->addParam<float>("mParamBlurStrV", &mParamBlurStrV).optionsStr("label='Vertical Blur Strength'");
+
 }
 
 void L10_FBO::setupFbo()
@@ -221,8 +235,8 @@ void L10_FBO::updateFbo()
 	gl::setMatricesWindow(getWindowSize());
 	mBlurShader->bind();
 	mBlurShader->uniform("uBlurAxis", vec2(1, 0));
-	mBlurShader->uniform("uBlurSize", 1.5f);
-	mBlurShader->uniform("uBlurStrength", 2.0f);
+	mBlurShader->uniform("uBlurSize", mParamBlurSizeU);
+	mBlurShader->uniform("uBlurStrength", mParamBlurStrU);
 	mHighPassFbo->bindTexture(0);
 	gl::drawSolidRect(Rectf(vec2(0), getWindowSize()));
 	mHighPassFbo->unbindTexture(0);
@@ -233,8 +247,8 @@ void L10_FBO::updateFbo()
 	gl::setMatricesWindow(getWindowSize());
 	mBlurShader->bind();
 	mBlurShader->uniform("uBlurAxis", vec2(0, 1));
-	mBlurShader->uniform("uBlurSize", 3.0f);
-	mBlurShader->uniform("uBlurStrength", 2.0f);
+	mBlurShader->uniform("uBlurSize", mParamBlurSizeV);
+	mBlurShader->uniform("uBlurStrength", mParamBlurStrV);
 	mBlurHFbo->bindTexture(0);
 	gl::drawSolidRect(Rectf(vec2(0), getWindowSize()));
 	mBlurHFbo->unbindTexture(0);
