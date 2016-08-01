@@ -78,6 +78,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				00FF35C91B27AB6900C32278 /* L02_BasicSceneApp.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -143,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				00FF35D11B27AEFC00C32278 /* assets */,
-				00FF35C91B27AB6900C32278 /* L02_BasicSceneApp.cpp */,
 				801B04B88E0144388D6F2F64 /* CinderApp.icns */,
 				17A4EC07C96548DE8C2F9760 /* Info.plist */,
 			);
@@ -234,7 +234,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = $HOME/Playground/cinder_glNext;
+				CINDER_PATH = ../../../..;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -260,7 +260,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = $HOME/Playground/cinder_glNext;
+				CINDER_PATH = ../../../..;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
