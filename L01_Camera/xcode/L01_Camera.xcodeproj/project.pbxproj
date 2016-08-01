@@ -76,6 +76,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				00FF35C71B27A89D00C32278 /* L01_CameraApp.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -140,7 +141,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				00FF35C71B27A89D00C32278 /* L01_CameraApp.cpp */,
 				801B04B88E0144388D6F2F64 /* CinderApp.icns */,
 				17A4EC07C96548DE8C2F9760 /* Info.plist */,
 			);
@@ -230,7 +230,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = $HOME/Playground/cinder_glNext;
+				CINDER_PATH = ../../../..;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -256,7 +256,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = $HOME/Playground/cinder_glNext;
+				CINDER_PATH = ../../../..;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
